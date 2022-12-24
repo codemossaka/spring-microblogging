@@ -5,6 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import javax.persistence.*
+import javax.validation.constraints.Email
 
 /**
  * L'entite utilisateur (user)
@@ -15,14 +16,16 @@ data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long?=null,
+    @Email
+    var email:String?= null,
     var username: String,
     var profession: String,
     var ville: String,
     var pays: String,
     var fullname: String,
     var password: String,
-//    @OneToMany
-//    var posts: MutableList<Post> = mutableListOf(),
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user")
+    var posts: MutableList<Post> = mutableListOf(),
     @CreationTimestamp
     var createdAt: Timestamp?=null,
     @UpdateTimestamp
